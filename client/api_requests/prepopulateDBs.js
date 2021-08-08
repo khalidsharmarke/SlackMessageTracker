@@ -1,5 +1,5 @@
 import populateDB from './populateDB.js';
-import { User, Channel } from './schema_definitions.js';
+import { User, Channel } from './schemaDefinitions.js';
 
 function populateUserDB(client) {
 	return populateDB(client.users.list, User, '/user');

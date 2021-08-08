@@ -43,7 +43,7 @@ function passDataToAPI(data, endpoint, http_method) {
 		url: endpoint,
 		json: true,
 		body: data,
-	});
+	}).catch(error => console.log(error.error));
 }
 
 // TODO:
@@ -53,10 +53,20 @@ async function populateDB(app_method, constructor, endpoint) {
 	let promisesArr = [];
 	while (true) {
 		try {
-			const slackData = await getDataFromSlack(app_method, cursor);
+			const slackData = await getDataFromSlack(
+				app_method,
+				cursor,
+			);
 			const selectedData = selectDataArray(slackData);
-			const transformedData = transformList(selectedData, constructor);
-			const response = passDataToAPI(transformedData, endpoint, 'POST');
+			const transformedData = transformList(
+				selectedData,
+				constructor,
+			);
+			const response = passDataToAPI(
+				transformedData,
+				endpoint,
+				'POST',
+			);
 			promisesArr.push(response);
 			cursor = slackData.response_metadata.next_cursor;
 			if (cursor == '') {

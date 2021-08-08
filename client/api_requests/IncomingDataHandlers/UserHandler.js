@@ -1,21 +1,20 @@
 import BaseHandler from './BaseHandler.js';
-import { passDataToAPI } from '../populateDB.js';
 import { User } from '../schemaDefinitions.js';
+
+const endpoint = '/user';
 
 class UserHandler extends BaseHandler {
 	static team_join(data) {
-		return super.errorWrapper(
-			passDataToAPI(super.constructItem(User, data), '/user', 'POST'),
-		);
+		return super.requestWrapper(User, data, endpoint, 'POST');
 	}
 
 	static user_change(data) {
-		return super.errorWrapper(
-			passDataToAPI(
-				super.constructItem(User, data),
-				`/user/${data.event.user.id}`,
-				'PATCH',
-			),
+		modifiedEndpoint = endpoint + `/${data.event.user.id}`;
+		return super.requestWrapper(
+			User,
+			data,
+			modifiedEndpoint,
+			super.patch,
 		);
 	}
 }

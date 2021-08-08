@@ -1,8 +1,12 @@
+import { passDataToAPI } from '../populateDB.js';
+
 class BaseHandler {
-	static errorWrapper(promise) {
+	static requestWrapper(constructor, data, endpoint, http_method) {
 		try {
-			return promise;
+			let item = BaseHandler.constructItem(constructor, data);
+			return passDataToAPI(item, endpoint, http_method);
 		} catch (e) {
+			console.log(e);
 			return e;
 		}
 	}
@@ -10,7 +14,7 @@ class BaseHandler {
 	static constructItem(constructor, data) {
 		const item = constructor(data);
 		return {
-			[`${constructor.name.toLowerCase()}`]: item,
+			[`${constructor.name.toLowerCase()}s`]: [item],
 		};
 	}
 }
