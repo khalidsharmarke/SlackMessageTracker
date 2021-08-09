@@ -11,6 +11,8 @@ class BaseHandler {
 		}
 	}
 
+	// constructs passable data for API
+	// ex. {users: [list of users]}
 	static constructItem(constructor, data) {
 		const item = constructor(data);
 		return {

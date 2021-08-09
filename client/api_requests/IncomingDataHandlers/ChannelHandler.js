@@ -1,11 +1,11 @@
 import BaseHandler from './BaseHandler.js';
 import { Channel } from '../schemaDefinitions.js';
 
-const endpoint = '/channel';
+const ENDPOINT = '/channel';
 
 class ChannelHandler extends BaseHandler {
 	static channel_created(data) {
-		return super.requestWrapper(Channel, data, endpoint, 'POST');
+		return super.requestWrapper(Channel, data, ENDPOINT, 'POST');
 	}
 
 	static channel_archived(data) {}

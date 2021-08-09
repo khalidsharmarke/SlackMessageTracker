@@ -3,8 +3,6 @@ from django.views import View
 import json
 
 from api.views.ErrorHandler import ErrorHandler
-from  api.models.User import User
-from api.models.Channel import Channel
 
 
 class BaseHandler(View, ErrorHandler):
@@ -22,6 +20,8 @@ class BaseHandler(View, ErrorHandler):
 
     def post_method(self, request, item_name, item_definition):
         try:
+            # prepare for expected standard of input
+            # ex. {users: [list of users]}
             item_name_as_plural = item_name + 's'
             # parse out body
             request_body = json.loads(request.body)
