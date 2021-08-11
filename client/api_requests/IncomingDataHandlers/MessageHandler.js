@@ -1,7 +1,12 @@
 import BaseHandler from './BaseHandler.js';
-import { passDataToAPI } from '../populateDB.js';
-import { Message } from '../schema_definitions.js';
+import { Message } from '../schemaDefinitions.js';
 
-class MessageHandler {}
+const ENDPOINT = '/message';
+
+class MessageHandler extends BaseHandler {
+	static channel_message(data) {
+		super.requestWrapper(Message, data, ENDPOINT, 'POST');
+	}
+}
 
 export default MessageHandler;

@@ -19,13 +19,13 @@ const WebClient = app.client;
 
 // TODO:
 // catch each event needed
-app.event('team_join', payload => UserHandler.team_join);
-app.event('user_change', payload => UserHandler.user_change);
-app.event('channel_created', payload => ChannelHandler.channel_created);
-app.event('channel_archive', payload => ChannelHandler.channel_archived);
-app.event('channel_rename', payload => ChannelHandler.channel_rename);
-app.event('channel_id_changed', payload => ChannelHandler.channel_id_changed);
-app.event('message', payload => MessageHandler);
+app.event('team_join', UserHandler.team_join);
+app.event('user_change', UserHandler.user_change);
+app.event('channel_created', ChannelHandler.channel_created);
+app.event('channel_archive', ChannelHandler.channel_archived);
+app.event('channel_rename', ChannelHandler.channel_renamed);
+app.event('channel_id_changed', ChannelHandler.channel_id_changed);
+app.event('message', MessageHandler.channel_message);
 
 async function startApp() {
 	await prepopulateDBs(WebClient)

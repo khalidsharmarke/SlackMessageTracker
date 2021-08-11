@@ -1,16 +1,11 @@
 import BaseHandler from './BaseHandler.js';
-import { passDataToAPI } from '../populateDB.js';
-import { Channel } from '../schema_definitions.js';
+import { Channel } from '../schemaDefinitions.js';
+
+const ENDPOINT = '/channel';
 
 class ChannelHandler extends BaseHandler {
 	static channel_created(data) {
-		return super.errorWrapper(
-			passDataToAPI(
-				super.constructItem(Channel, data),
-				'/channel',
-				'POST',
-			),
-		);
+		return super.requestWrapper(Channel, data, ENDPOINT, 'POST');
 	}
 
 	static channel_archived(data) {}

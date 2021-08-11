@@ -4,7 +4,9 @@ function Message(data) {
 		channel_id: data.event.channel,
 		message_id: data.event.client_msg_id,
 		body: data.event.text,
-		ts: data.event_time,
+		ts: data.event.event_ts.split('.')[0],
+		// is_edit: null,
+		// is_thread: null
 	};
 }
 
