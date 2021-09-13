@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('slackbot/', include('api.urls')),
+    path('frontend/', include('frontend.urls')),
+    path('api/', include('api.urls')),
     path('admin/', admin.site.urls),
 ]

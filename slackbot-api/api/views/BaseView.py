@@ -25,7 +25,6 @@ class BaseHandler(View, ErrorHandler):
             item_name_as_plural = item_name + 's'
             # parse out body
             request_body = json.loads(request.body)
-            print(request_body)
             # check if passed a list of items
             if item_name_as_plural in request_body \
                     and \

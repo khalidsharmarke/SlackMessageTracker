@@ -12,13 +12,8 @@ const app = new App.App({
 	signingSecret: process.env.APP_SIGNING_SECRET,
 });
 
-// TODO:
-// find out if can implement separate WebClient instance
-// that can take .env variable here
-const WebClient = app.client;
+const SlackWebClient = app.client;
 
-// TODO:
-// catch each event needed
 app.event('team_join', UserHandler.team_join);
 app.event('user_change', UserHandler.user_change);
 app.event('channel_created', ChannelHandler.channel_created);
@@ -28,11 +23,14 @@ app.event('channel_id_changed', ChannelHandler.channel_id_changed);
 app.event('message', MessageHandler.channel_message);
 
 async function startApp() {
-	await prepopulateDBs(WebClient)
+	await prepopulateDBs(SlackWebClient)
 		.then(arr_of_responses => console.log(arr_of_responses))
-		.catch(error => console.log(error));
-	await app.start(process.env.PORT);
-
+		// In the event we fail to fetch the pre-needed Slack Data
+		// exit the script
+		.catch(error => {
+			throw error;
+		});
+	app.start(process.env.PORT);
 	console.log(`app running on port ${process.env.PORT}`);
 }
 startApp();

@@ -1,4 +1,7 @@
 import request from 'request-promise';
+import APIRequestHandler from './api_request_handler.js';
+
+const API = new APIRequestHandler(process.env.DJANGO_API);
 
 function getDataFromSlack(app_method, cursor) {
 	return app_method({
@@ -37,21 +40,17 @@ function passDataToAPI(data, endpoint, http_method) {
 	// if wrapper for .env variable that we in testing to
 	// not actually send request to django
 	// ie: if (process.env.TESTING) then dont do below
-	return request({
+	return API.sendRequest({
 		method: http_method,
-		baseUrl: process.env.DJANGO_API,
 		url: endpoint,
-		json: true,
 		body: data,
-	}).catch(error => console.log(error.error));
+	});
 }
 
-// TODO:
-// Describe whats gong on here in comments
 async function populateDB(app_method, constructor, endpoint) {
 	let cursor = '';
 	let promisesArr = [];
-	while (true) {
+	do {
 		try {
 			const slackData = await getDataFromSlack(
 				app_method,
@@ -62,21 +61,18 @@ async function populateDB(app_method, constructor, endpoint) {
 				selectedData,
 				constructor,
 			);
-			const response = passDataToAPI(
+			const response = await passDataToAPI(
 				transformedData,
 				endpoint,
 				'POST',
 			);
 			promisesArr.push(response);
 			cursor = slackData.response_metadata.next_cursor;
-			if (cursor == '') {
-				break;
-			}
 		} catch (e) {
 			console.log(e);
 			break;
 		}
-	}
+	} while (cursor != '');
 	return Promise.all(promisesArr);
 }
 

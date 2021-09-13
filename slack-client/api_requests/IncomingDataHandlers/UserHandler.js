@@ -14,7 +14,7 @@ class UserHandler extends BaseHandler {
 			User,
 			data,
 			modifiedEndpoint,
-			super.patch,
+			'PATCH',
 		);
 	}
 }
