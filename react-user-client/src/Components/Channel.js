@@ -2,6 +2,8 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 
 function Channel(props) {
+	// on selecting a channl
+	// highlight the channel, and make it disabled
 	let variant = 'link';
 	let disabled = false;
 	if (props.active) {

@@ -1,4 +1,3 @@
-import request from 'request-promise';
 import APIRequestHandler from './api_request_handler.js';
 
 const API = new APIRequestHandler(process.env.DJANGO_API);
@@ -47,26 +46,34 @@ function passDataToAPI(data, endpoint, http_method) {
 	});
 }
 
+// on process start
 async function populateDB(app_method, constructor, endpoint) {
 	let cursor = '';
 	let promisesArr = [];
 	do {
+		// for each available page of data from Slack
 		try {
+			// get new page of data from slack
 			const slackData = await getDataFromSlack(
 				app_method,
 				cursor,
 			);
+			// parse page for needed data
 			const selectedData = selectDataArray(slackData);
+			// restructure data into wanted standard
 			const transformedData = transformList(
 				selectedData,
 				constructor,
 			);
+			// send data to backend for writing to DB
 			const response = await passDataToAPI(
 				transformedData,
 				endpoint,
 				'POST',
 			);
+			// record the response from the backend for visual confirmation
 			promisesArr.push(response);
+			// move to the next page
 			cursor = slackData.response_metadata.next_cursor;
 		} catch (e) {
 			console.log(e);

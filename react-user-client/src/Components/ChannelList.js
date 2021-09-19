@@ -7,7 +7,10 @@ function ChannelList(props) {
 		return null;
 	}
 	return (
-		<ButtonGroup vertical className='ChannelList group'>
+		<ButtonGroup
+			vertical
+			className='ChannelList grouped-text-will-scroll-on-overflow'
+		>
 			{props.channels.map(channel_name => {
 				let active = false;
 				if (channel_name === props.active_channel) {

@@ -5,7 +5,7 @@ import {
 	UserHandler,
 	ChannelHandler,
 	MessageHandler,
-} from './api_requests/IncomingDataHandlers/index.js';
+} from './slack_event_handlers/index.js';
 
 const app = new App.App({
 	token: process.env.SLACK_BOT_TOKEN,
@@ -24,9 +24,10 @@ app.event('message', MessageHandler.channel_message);
 
 async function startApp() {
 	await prepopulateDBs(SlackWebClient)
-		.then(arr_of_responses => console.log(arr_of_responses))
+		.then(responses => console.log(responses))
 		// In the event we fail to fetch the pre-needed Slack Data
 		// exit the script
+		// likely do to incorrect API keys
 		.catch(error => {
 			throw error;
 		});

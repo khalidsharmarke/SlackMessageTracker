@@ -1,14 +1,14 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import JsonWebsocketConsumer
 
-from frontend.DataSet import DataSet
+from frontend.MessagesDataSet import MessagesDataSet
 
 
 class FrontEndConsumer(JsonWebsocketConsumer):
     # Create Dataset, accept client, and send first set of pages
     def connect(self):
         async_to_sync(self.channel_layer.group_add)('live-connections', self.channel_name)
-        self.dataset = DataSet()
+        self.dataset = MessagesDataSet()
         first_pages = self.dataset.get_first_page_for_channels()
         self.accept()
         self.send_json(first_pages)

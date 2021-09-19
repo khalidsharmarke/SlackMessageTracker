@@ -7,7 +7,7 @@ function MessageList(props) {
 		return null;
 	}
 	return (
-		<Container className='group'>
+		<Container className='grouped-text-will-scroll-on-overflow'>
 			{props.messages.map(message => (
 				<Message key={message.ts} data={message} />
 			))}

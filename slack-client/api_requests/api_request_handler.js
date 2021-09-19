@@ -1,5 +1,8 @@
 import request from 'request-promise';
 
+// handles piping of requests to backend
+// keeps failed requests in memory for future retries
+// will send a new set of requests including the failed on new slack event
 class APIRequestHandler {
 	constructor(backend_uri) {
 		this.count = 0;

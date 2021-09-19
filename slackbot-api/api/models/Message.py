@@ -21,7 +21,7 @@ class Message(models.Model):
             "ts": self.ts
         }
 
-
+# on db entry, alert frontend app as to the new entry
 @receiver(post_save, sender=Message)
 def emit_db_message_entry(sender, instance, **kwargs):
     layer = get_channel_layer()

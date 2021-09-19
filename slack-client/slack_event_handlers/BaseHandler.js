@@ -1,4 +1,4 @@
-import { passDataToAPI } from '../populateDB.js';
+import { passDataToAPI } from '../api_requests/populateDB.js';
 
 class BaseHandler {
 	static requestWrapper(constructor, data, endpoint, http_method) {

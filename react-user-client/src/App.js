@@ -9,21 +9,24 @@ class App extends Component {
 			__active_channel: null,
 			data: {},
 		};
-		this.ws = new WebSocket('ws://localhost:8000/ws/');
+		this.ws = new WebSocket(process.env.REACT_APP_BackEnd_URI);
 		this.ws.onerror = e => console.log(e);
 		this.ws.onopen = e => console.log('WS connnected');
 		this.ws.onmessage = this.handleIncomingData;
 	}
 
+	// on new data from server
 	handleIncomingData = payload => {
 		const data = JSON.parse(payload.data);
 		for (let channel in data) {
+			// add new list of data to state
 			if (this.state[channel] === undefined) {
 				this.setState(state => {
 					state.data[channel] = data[channel];
 					return state;
 				});
 			}
+			// add to preexisting list in state
 			if (this.state[channel] !== undefined) {
 				this.setState(state => {
 					state.data[channel].push(...data[channel]);

@@ -10,7 +10,7 @@ class Channel(models.Model):
     name = models.TextField()
     archived = models.BooleanField(default=False)
 
-
+# on db entry, alert frontend app as to the new entry
 @receiver(post_save, sender=Channel)
 def emit_db_channel_entry(sender, instance, **kwargs):
     layer = get_channel_layer()

@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from api.models import Channel, Message
 
 
-class DataSet:
+class MessagesDataSet:
     def __init__(self):
         self.collection = {}
         for channel in Channel.objects.all():
@@ -43,7 +43,7 @@ class DataSet:
         self.increment_page(channel)
         return page
 
-    def page_to_list(self, book, page_number, test=None):
+    def page_to_list(self, book, page_number):
         page_as_list = []
         for message in book.get_page(page_number):
             if message is not None:

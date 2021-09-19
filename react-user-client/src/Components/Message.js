@@ -4,6 +4,7 @@ function Message(props) {
 	function UNIXtoLocalTime(unix_ts) {
 		// const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 		// const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		// src: https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
 		const date = new Date(unix_ts * 1000);
 		const year = date.getFullYear();
 		const month = date.getMonth();

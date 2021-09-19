@@ -1,5 +1,5 @@
 import BaseHandler from './BaseHandler.js';
-import { Channel } from '../schemaDefinitions.js';
+import { Channel } from '../api_requests/schemaDefinitions.js';
 
 const ENDPOINT = '/channel';
 
