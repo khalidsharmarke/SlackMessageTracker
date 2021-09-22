@@ -33,6 +33,6 @@ header {
 	color: white;
 }
 
-.grouped-text-will-scroll-on-overflow {
+.grouped-text-scroll-overflow {
 	overflow: scroll;
 }

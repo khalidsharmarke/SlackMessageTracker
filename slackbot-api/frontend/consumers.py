@@ -12,7 +12,6 @@ class FrontEndConsumer(JsonWebsocketConsumer):
         first_pages = self.dataset.get_first_page_for_channels()
         self.accept()
         self.send_json(first_pages)
-        print(first_pages)
 
     # on request for new page, send next page
     def receive(self, text_data=None, bytes_data=None, **kwargs):

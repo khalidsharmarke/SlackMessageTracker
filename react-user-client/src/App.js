@@ -6,10 +6,10 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			__active_channel: null,
+			active_channel: null,
 			data: {},
 		};
-		this.ws = new WebSocket(process.env.REACT_APP_BackEnd_URI);
+		this.ws = new WebSocket(process.env.REACT_APP_BACKEND_URI);
 		this.ws.onerror = e => console.log(e);
 		this.ws.onopen = e => console.log('WS connnected');
 		this.ws.onmessage = this.handleIncomingData;
@@ -37,20 +37,20 @@ class App extends Component {
 	};
 
 	changeActiveChannel = channel_name => {
-		this.setState({ __active_channel: channel_name });
+		this.setState({ active_channel: channel_name });
 	};
 
 	render() {
 		return (
 			<div className='App'>
 				<ChannelList
-					active_channel={this.state.__active_channel}
+					active_channel={this.state.active_channel}
 					changeActiveChannel={this.changeActiveChannel}
 					channels={Object.keys(this.state.data)}
 				/>
 				<MessageList
 					messages={
-						this.state.data[this.state.__active_channel]
+						this.state.data[this.state.active_channel]
 					}
 				/>
 			</div>

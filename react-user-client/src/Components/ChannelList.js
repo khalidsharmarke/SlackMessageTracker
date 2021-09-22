@@ -9,7 +9,7 @@ function ChannelList(props) {
 	return (
 		<ButtonGroup
 			vertical
-			className='ChannelList grouped-text-will-scroll-on-overflow'
+			className='ChannelList grouped-text-scroll-overflow'
 		>
 			{props.channels.map(channel_name => {
 				let active = false;
