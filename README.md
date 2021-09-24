@@ -19,5 +19,7 @@ The drawbacks of this approach are mainly a lack of flexibility given that each 
 An example of this would be that the addition of a new feature that would add more tables to the database would then need implemented accross all 3 packages.  
 For a solo developer, this may be fine, but for a team of devs this could prove to be difficult.
 
-
+## Database
+There are 3 tables: Users, Channels,and Messages. 
+These 3 encompass the current available features that this project has to offer of displaying who posted what message in which channel.  
 
