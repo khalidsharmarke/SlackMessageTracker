@@ -1,8 +1,8 @@
 # Slack Client
 
-This package's purpose is to receive data from Slack for the project for passing to the slackbot-api(backend) package.
-This package is resposible for transforming incoming data and passing said data to the backend via HTTP requests.  
-It's built ontop of Slack's BoltJS package to hook onto events that occur in the workspace. 
+This package's purpose is to receive data from Slack for the project for passing to the slackbot-api(backend) package.  
+It's resposible for transforming incoming data and passing said data to the backend via HTTP requests.  
+Built ontop of Slack's BoltJS package to hook onto events that occur in the workspace. 
   
 ## Scope
 Currently, the events that are being listened for are:
