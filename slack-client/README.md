@@ -36,7 +36,7 @@ On any new requests to send out, it'll first try to clear out the queue of faile
 ## Data Handling
 JS representations of the Table Models kept in the backend are written in ./api_request/schema-definitions.js  
 The package uses these constructors to create new pieces of data based on incoming data from Slack.  
-The new dat is then appended to the given request created to be sent to the backend.  
+The new data is then appended to the given request created to be sent to the backend.  
 
 # Static Classes
 The classes in ./slack_event_handlers outline the methods to be called on a given scope. They're called per event in the Slack Workspace.  
