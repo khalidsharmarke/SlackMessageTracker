@@ -1,70 +1,36 @@
-# Getting Started with Create React App
+# React User Client
+This package's purpose is to make viewable the workspace's data.  
+It's responsible for providing an intuitive layout for users to view their workspace's data.  
+Built using `npx create-react-app` with all available functionality intact.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Design
+The UI is meant to emulate slack's workspace, where there are a list of channels on the left of the page and a scrollable body of messages in the center.  
+This is accomplished by the following react structure:
+- App:
+  - ChannelList:
+    - Channel
+  - MessageList:
+    - Message
 
-## Available Scripts
+Here, the base App will render the lists of channels and messages that have been passed data to construct each channel and message.  
+On page load, the App will make a WSC to the backend where it'll be receiving data from.
+On a selected channel in ChannelList, the App will render the appropriate MessageList for that channel.
+On scrolling to the end of a MessageList, the App will request a new page of data from the backend to continue populating the MessageList.  
+On receiving new data, the App will modify it's state which will lead to both/either child components rerendering with the new data.  
 
-In the project directory, you can run:
+## State
+The state is lifted up to and completely handled by the App component.  
+The App controls and manipulates the state by:
+  1. storing pertinent data
+  2. tracking which channel the user is currently viewing
+  3. passing the data to the other components
+  4. passing methods that manipulate the state to the other compenents
+  5. declaring methods that create new network requests
+  6. declaring methods that either modify or append to the stored data
 
-### `npm start`
+The state is structured by 2 keys: active_channel and data.  
+Data is where the representation of the data the backend has is stored.  
+Active_channel is where the App tracks which channel is currently being viewed.  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The App will pass down methods to MessageList that allow it to make request for new pages of data for the given channel.
+The App will pass down methods to ChannelList that allow it to change active_channel.
