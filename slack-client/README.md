@@ -38,7 +38,7 @@ JS representations of the Table Models kept in the backend are written in ./api_
 The package uses these constructors to create new pieces of data based on incoming data from Slack.  
 The new data is then appended to the given request created to be sent to the backend.  
 
-# Static Classes
+## Static Classes
 The classes in ./slack_event_handlers outline the methods to be called on a given scope. They're called per event in the Slack Workspace.  
 They handle creating the new data points and call the APIRequestHandler with the data to make a new request.
 
