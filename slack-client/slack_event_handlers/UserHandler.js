@@ -1,5 +1,5 @@
 import BaseHandler from './BaseHandler.js';
-import { User } from '../schemaDefinitions.js';
+import { User } from '../api_requests/schemaDefinitions.js';
 
 const ENDPOINT = '/user';
 
@@ -14,7 +14,7 @@ class UserHandler extends BaseHandler {
 			User,
 			data,
 			modifiedEndpoint,
-			super.patch,
+			'PATCH',
 		);
 	}
 }

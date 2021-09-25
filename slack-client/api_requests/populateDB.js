@@ -1,4 +1,6 @@
-import request from 'request-promise';
+import APIRequestHandler from './api_request_handler.js';
+
+const API = new APIRequestHandler(process.env.DJANGO_API);
 
 function getDataFromSlack(app_method, cursor) {
 	return app_method({
@@ -37,46 +39,47 @@ function passDataToAPI(data, endpoint, http_method) {
 	// if wrapper for .env variable that we in testing to
 	// not actually send request to django
 	// ie: if (process.env.TESTING) then dont do below
-	return request({
+	return API.sendRequest({
 		method: http_method,
-		baseUrl: process.env.DJANGO_API,
 		url: endpoint,
-		json: true,
 		body: data,
-	}).catch(error => console.log(error.error));
+	});
 }
 
-// TODO:
-// Describe whats gong on here in comments
+// on process start
 async function populateDB(app_method, constructor, endpoint) {
 	let cursor = '';
 	let promisesArr = [];
-	while (true) {
+	do {
+		// for each available page of data from Slack
 		try {
+			// get new page of data from slack
 			const slackData = await getDataFromSlack(
 				app_method,
 				cursor,
 			);
+			// parse page for needed data
 			const selectedData = selectDataArray(slackData);
+			// restructure data into wanted standard
 			const transformedData = transformList(
 				selectedData,
 				constructor,
 			);
-			const response = passDataToAPI(
+			// send data to backend for writing to DB
+			const response = await passDataToAPI(
 				transformedData,
 				endpoint,
 				'POST',
 			);
+			// record the response from the backend for visual confirmation
 			promisesArr.push(response);
+			// move to the next page
 			cursor = slackData.response_metadata.next_cursor;
-			if (cursor == '') {
-				break;
-			}
 		} catch (e) {
 			console.log(e);
 			break;
 		}
-	}
+	} while (cursor != '');
 	return Promise.all(promisesArr);
 }
 

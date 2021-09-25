@@ -1,9 +1,6 @@
 from django.urls import path
 from api.views import *
 
-# TODO:
-#  attempt to send constructors of each item
-#  to each authenticated client
 
 urlpatterns = [
     path('', Index),
